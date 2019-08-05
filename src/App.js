@@ -15,18 +15,7 @@ class App extends React.Component {
   }
 
   printSelectValue = 'all';
-
-  // handleDestructure = obj => {
-  //   console.log('handleDestructure running');
-  //   for (var {
-  //     volumeInfo: { title: t },
-  //     // saleInfo: {
-  //     //   listPrice: { amount: a }
-  //     // }
-  //   } of obj.items) {
-  //     console.log('Title: ' + t);
-  //   }
-  // };
+  typeSelectValue = 'no-filter';
 
   handleDestructure = obj => {
     return obj.items.map(book =>
@@ -71,17 +60,24 @@ class App extends React.Component {
   handleSearch = e => {
     e.preventDefault();
     let query = e.currentTarget.search.value;
-    console.log(this.printSelectValue);
-    if (this.printSelectValue!=='all') query = query +'&printType=' + this.printSelectValue;
-    // henry & filter=paid-ebooks & printType=books &
+    console.log(this.typeSelectValue);
+    if (this.printSelectValue !== 'all') {
+      query+= '&printType=' + this.printSelectValue;
+    }
+    if (this.typeSelectValue !== 'no-filter') {
+      query+= '&filter=' + this.typeSelectValue;
+    }
     const URL = this.handleURL(query);
     this.handleFetch(URL);
     console.log(URL);
   };
 
   handlePrintChange = e => {
-    console.log(e.currentTarget.value);
     this.printSelectValue = e.currentTarget.value;
+  }
+
+  handleTypeChange = e => {
+    this.typeSelectValue = e.currentTarget.value;
   }
 
   render() {
@@ -89,7 +85,7 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <Search handleSearch={this.handleSearch} />
-        <Filter handlePrintChange={this.handlePrintChange} />
+        <Filter handlePrintChange={this.handlePrintChange} handleTypeChange={this.handleTypeChange} />
         <List books={this.state.books} />
       </div>
     );
