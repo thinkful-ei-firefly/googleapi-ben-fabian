@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Search() {
+export default function Search(props) {
   return (
     <div className="Filter">
-      <select id="print-type">
+      <select onChange={props.handlePrintChange} id="print-type">
         <option value="all">All</option>
         <option value="books">Books</option>
         <option value="magazines">Magazines</option>
