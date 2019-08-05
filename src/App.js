@@ -16,6 +16,7 @@ class App extends React.Component {
 
   printSelectValue = 'all';
   typeSelectValue = 'no-filter';
+  searchTerm = '';
 
   handleDestructure = obj => {
     return obj.items.map(book =>
@@ -51,33 +52,36 @@ class App extends React.Component {
       .catch(error => console.log(error));
   };
 
-  handleURL = query => {
+  handleURL = () => {
     const BASE_URL = 'https://www.googleapis.com/books/v1/volumes?q=';
     const API_KEY = '&key=AIzaSyC1O5z_V2IgWRZUA0LoxsLDmnA0_t5hRlU';
-    return BASE_URL + query + API_KEY;
-  };
-
-  handleSearch = e => {
-    e.preventDefault();
-    let query = e.currentTarget.search.value;
-    console.log(this.typeSelectValue);
+    let query = this.searchTerm;
     if (this.printSelectValue !== 'all') {
       query+= '&printType=' + this.printSelectValue;
     }
     if (this.typeSelectValue !== 'no-filter') {
       query+= '&filter=' + this.typeSelectValue;
     }
-    const URL = this.handleURL(query);
+    const URL = BASE_URL + query + API_KEY;
     this.handleFetch(URL);
-    console.log(URL);
   };
+
+  handleSearch = e => {
+    e.preventDefault();
+    this.searchTerm = e.currentTarget.search.value;
+    this.handleURL();
+  };
+
+
 
   handlePrintChange = e => {
     this.printSelectValue = e.currentTarget.value;
+    this.handleURL();
   }
 
   handleTypeChange = e => {
     this.typeSelectValue = e.currentTarget.value;
+    this.handleURL();
   }
 
   render() {
