@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function Search(props) {
   return (
-    <form onSubmit={props.handleSearch}>
+    <form id="book-form" onSubmit={props.handleSearch}>
       <label htmlFor="search">Search</label>
-      <input id="search" />
+      <input id="search" required />
       <button>Search</button>
     </form>
   );

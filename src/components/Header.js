@@ -3,7 +3,7 @@ import React from 'react';
 function Header(){
 	return(
 		<header>
-			<h1>Geoogle Book Search</h1>
+			<h1>Google Book Search</h1>
 		</header>
 	)
 }
